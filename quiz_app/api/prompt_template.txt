@@ -31,6 +31,8 @@ The quiz must follow this exact structure:
 Requirements:
 
 - Each question must have exactly 4 distinct answer options.
+  
+- Make sure there are: No trailing commas in arrays or objects 
 
 - Only one correct answer is allowed per question, and it must be present in 'question_options'.
 

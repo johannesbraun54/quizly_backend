@@ -46,11 +46,6 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
     username = serializers.CharField()
     password = serializers.CharField(write_only=True)
     
-    # def __init__(self, *args, **kwargs):
-    #     super().__init__(*args, **kwargs)
-    #     if "username" in self.fields:
-    #         self.fields.pop("username")
-    
     def validate(self, attrs):
         username = attrs.get('username')
         password = attrs.get('password')
@@ -58,13 +53,10 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
         try:
             user = User.objects.get(username=username)
         except User.DoesNotExist:
-            raise serializers.ValidationError("username wrong")
+            raise serializers.ValidationError("username or password wrong")
         
         if not user.check_password(password):
-            raise serializers.ValidationError("password wrong")
-        
-        # if not user.userprofile.is_verified:
-        #     raise serializers.ValidationError("password or username wrong")
+            raise serializers.ValidationError("username or password wrong")
         
         self.user = user 
         data = super().validate({"username": user.username, "password": password})
